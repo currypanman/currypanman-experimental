@@ -1,0 +1,20 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "currypanman-experimental"
+  namespace: "default"
+  labels:
+    app: "currypanman-experimental"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "currypanman-experimental"
+  template:
+    metadata:
+      labels:
+        app: "currypanman-experimental"
+    spec:
+      containers:
+      - name: "currypanman-experimental-sha256-1"
+        image: "gcr.io/currypanman-experimental/github.com/currypanman/currypanman-experimental:b953c697b323016c7e28971103e58a2a86dd83ba"
