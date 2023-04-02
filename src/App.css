@@ -1,3 +1,27 @@
+.kuma-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.kuma-header {
+  position: absolute;
+  font-size: 48px;
+  text-align: center;
+  top: calc(50% - 50px);
+  left: 100vw;
+  height: 100px;
+  width: 500px;
+}
+
+.kuma-bear {
+  position: absolute;
+  top: 100vh;
+  left: calc(50% - 100px);
+  width: 200px;
+}
+
 .App {
   text-align: center;
 }
