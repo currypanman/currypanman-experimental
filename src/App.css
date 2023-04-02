@@ -5,7 +5,19 @@
   position: relative;
 }
 
+.kuma-logo {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.kuma-logo span {
+}
+
 .kuma-header {
+  display: flex;
   position: absolute;
   font-size: 48px;
   text-align: center;

@@ -11,13 +11,14 @@ const State = {
 
 function App() {
   const state = State.Gasp;
+  const logo = React.createRef();
   const header = React.createRef();
   const bear = React.createRef();
 
   useEffect(() => {
-    gsap.to(header.current, {x:-250 - window.innerWidth / 2, duration: 1, onComplete: () => {
-      gsap.to(bear.current, {y:-267, duration: 1});
-    }});
+    const tl = gsap.timeline();
+    tl.to('.kuma-header span', {x:-250 - window.innerWidth / 2, duration: 0.3, stagger: 0.3});
+    tl.to(bear.current, {y:-267, duration: 1});
   }, [header, bear]);
 
   switch (state) {
@@ -25,7 +26,11 @@ function App() {
       return (
         <div className="kuma-container">
           <h1 className="kuma-header" ref={header}>
-            Present from Kuma!
+            <span>Present</span>
+            <span>&nbsp;</span>
+            <span>from</span>
+            <span>&nbsp;</span>
+            <span>Kuma!</span>
           </h1>
           <img className="kuma-bear" ref={bear}
             src={`${process.env.PUBLIC_URL}/present_kuma.png`} />
