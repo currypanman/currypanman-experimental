@@ -11,7 +11,6 @@ const State = {
 
 function App() {
   const state = State.Gasp;
-  const logo = React.createRef();
   const header = React.createRef();
   const bear = React.createRef();
 
