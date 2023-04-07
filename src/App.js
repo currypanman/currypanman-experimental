@@ -2,15 +2,17 @@ import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { gsap } from 'gsap';
+import DbSample from './Books.tsx';
 
 const State = {
   Demo: 1,
   Capture: 2,
   Gsap: 3,
+  DbSample: 4,
 }
 
 function App() {
-  const state = State.Gasp;
+  const state = State.DbSample;
   const header = React.createRef();
   const bear = React.createRef();
 
@@ -21,6 +23,8 @@ function App() {
   }, [header, bear]);
 
   switch (state) {
+    case State.DbSample:
+      return DbSample();
     case State.Gasp:
       return (
         <div className="kuma-container">
