@@ -80,11 +80,11 @@ class BookController {
   }
 
   async get(id: number): Promise<Book | undefined> {
-    const book = await this.db.get('books', id)
-    if (!book || !book.id) {
+    const obj = await this.db.get('books', id)
+    if (!obj || !obj.id) {
       return undefined;
     }
-    return new Book(book.id, book.pages);
+    return new Book(obj.id, obj.pages.map(page => new Page(page)));
   }
 
   async update(book: Book) {
