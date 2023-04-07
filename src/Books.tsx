@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { DBSchema, IDBPDatabase, openDB } from 'idb';
 
 class Page {
   contents: string;
+
+  constructor(contents: string) {
+    this.contents = contents;
+  }
 }
 
 class Book {
@@ -26,8 +30,11 @@ class Book {
     return obj
   }
 
-  static fromObject(obj): Book {
-    return new Book(obj.id, obj.pages);
+  static fromObject(obj: { id?: number, pages: string[] }): Book | undefined {
+    if (!obj.id) {
+      return undefined;
+    }
+    return new Book(obj.id, obj.pages.map(page => new Page(page)));
   }
 }
 
@@ -61,13 +68,23 @@ class BookController {
   }
 
   async getAll(): Promise<Book[]> {
-    const books = await this.db.getAll('books');
-    return books.map(Book.fromObject);
+    const objs = await this.db.getAll('books');
+    let books: Book[] = [];
+    for (const book of objs.map(Book.fromObject)) {
+      if (!book) {
+        continue;
+      }
+      books.push(book);
+    }
+    return books;
   }
 
-  async get(id: number): Promise<Book> {
+  async get(id: number): Promise<Book | undefined> {
     const book = await this.db.get('books', id)
-    return new Book(id, []);
+    if (!book || !book.id) {
+      return undefined;
+    }
+    return new Book(book.id, book.pages);
   }
 
   async update(book: Book) {
@@ -83,25 +100,42 @@ class BookController {
   }
 }
 
+const controller: BookController = new BookController();
+
 function DbSample() {
-  const controller: BookController = new BookController();
-  controller.init()
-    .then(() => {
-      return controller.create([]);
-      // return controller.get(1);
-      // return controller.getAll();
-    })
-    .then(() => {
-      console.log('created');
+  const [books, setBooks] = useState<Book[]>([]);
+
+  async function refresh() {
+    const bs = await controller.getAll();
+    setBooks(bs);
+  }
+
+  useEffect(() => {
+    controller.init().then(() => {
+      refresh();
     });
-  
-  const message: string = "Not yet implemented.";
+  }, []);
+
+  async function handleAddBook() {
+    await controller.create([]);
+    refresh();
+  }
+
+  async function handleDeleteBook(book: Book) {
+    await controller.delete(book);
+    refresh();
+  }
 
   return (
     <div>
-      {message}
+      <ul>
+        { books.map( book =>
+          <li>Book {book.id} <button onClick={ () => handleDeleteBook(book) }>Delete</button></li>
+        ) }
+      </ul>
+      <button onClick={ handleAddBook } >Add book</button>
     </div>
   );
 }
 
-export default DbSample;
+export { Page, Book, BookController, DbSample };

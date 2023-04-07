@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { gsap } from 'gsap';
-import DbSample from './Books.tsx';
+import { DbSample } from './Books.tsx';
 
 const State = {
   Demo: 1,
