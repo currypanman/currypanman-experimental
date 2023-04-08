@@ -93,10 +93,14 @@ class BookController {
 
   async get(id: number): Promise<Book | undefined> {
     const obj = await this.db.get('books', id);
-    if (!obj || !obj.id) {
+    if (!obj) {
       return undefined;
     }
-    return new Book(obj.id, obj.pages.map(page => new Page(page)));
+    const book = Book.fromObject(obj);
+    if (!!book) {
+      await this.loadPageImages(book);
+    }
+    return book;
   }
 
   async loadPageImages(book: Book) {
