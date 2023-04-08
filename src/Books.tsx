@@ -59,7 +59,6 @@ interface BookDB extends DBSchema {
 
 class BookController {
   db: IDBPDatabase<BookDB>;
-  books: any;
 
   async init() {
     this.db = await openDB<BookDB>('books', 1, {
@@ -97,9 +96,10 @@ class BookController {
       return undefined;
     }
     const book = Book.fromObject(obj);
-    if (!!book) {
-      await this.loadPageImages(book);
+    if (!book) {
+      return undefined;
     }
+    await this.loadPageImages(book);
     return book;
   }
 
@@ -184,10 +184,10 @@ function DbSample() {
           <li key={book.id}>
             Book {book.id}
             { book.pages.map( page =>
-              !!page.imageUrl ? (
-                <img src={page.imageUrl} style={{width: '10%', margin: '1px'}} />
-              ) : (
+              !page.imageUrl ? (
                 <span>Image not loaded</span>
+              ) : (
+                <img src={page.imageUrl} style={{width: '10%', margin: '1px'}} />
               )
             ) }
             <input
