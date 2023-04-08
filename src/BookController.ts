@@ -57,7 +57,8 @@ interface BookDB extends DBSchema {
 }
 
 class BookController {
-  db: IDBPDatabase<BookDB>;
+  // TODO: Maybe we can somehow remove '!' here?
+  db!: IDBPDatabase<BookDB>;
 
   async init() {
     this.db = await openDB<BookDB>('books', 1, {

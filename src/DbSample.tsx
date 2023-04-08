@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Book, BookController } from './BookController.ts';
+import { Book, BookController } from './BookController';
 
 const controller: BookController = new BookController();
 
@@ -48,7 +48,7 @@ function DbSample() {
               !page.imageUrl ? (
                 <span>Image not loaded</span>
               ) : (
-                <img src={page.imageUrl} style={{width: '10%', margin: '1px'}} />
+                <img key={page.imageKey} src={page.imageUrl} style={{width: '10%', margin: '1px'}} />
               )
             ) }
             <input
