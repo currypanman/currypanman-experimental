@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/currypanman-experimental/static/css/main.f537e23d.css",
-    "main.js": "/currypanman-experimental/static/js/main.a88f21ce.js",
+    "main.js": "/currypanman-experimental/static/js/main.41ff5080.js",
     "static/js/787.28cb0dcd.chunk.js": "/currypanman-experimental/static/js/787.28cb0dcd.chunk.js",
     "static/media/logo.svg": "/currypanman-experimental/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/currypanman-experimental/index.html",
     "main.f537e23d.css.map": "/currypanman-experimental/static/css/main.f537e23d.css.map",
-    "main.a88f21ce.js.map": "/currypanman-experimental/static/js/main.a88f21ce.js.map",
+    "main.41ff5080.js.map": "/currypanman-experimental/static/js/main.41ff5080.js.map",
     "787.28cb0dcd.chunk.js.map": "/currypanman-experimental/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f537e23d.css",
-    "static/js/main.a88f21ce.js"
+    "static/js/main.41ff5080.js"
   ]
 }
