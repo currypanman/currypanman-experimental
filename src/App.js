@@ -47,8 +47,8 @@ function App() {
 
         const logo = this.physics.add.image(400, 100, 'logo');
 
-        logo.setVelocity(150, 200);
-        logo.setBounce(1, 1);
+        logo.setInteractive({ draggable: true });
+        logo.on('drag', (p, x, y) => logo.setPosition(x, y));
         logo.setCollideWorldBounds(true);
 
         emitter.startFollow(logo);
