@@ -1,18 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { gsap } from 'gsap';
 import { DbSample } from './DbSample';
+import Phaser from 'phaser';
 
 const State = {
   Demo: 1,
   Capture: 2,
   Gsap: 3,
   DbSample: 4,
+  Phaser: 5,
 }
 
 function App() {
-  const state = State.DbSample;
+  const state = State.Phaser;
   const header = React.createRef();
   const bear = React.createRef();
 
@@ -22,7 +24,59 @@ function App() {
     tl.to(bear.current, {y:-267, duration: 1});
   }, [header, bear]);
 
+  const [game, setGame] = useState();
+
   switch (state) {
+    case State.Phaser:
+      function preload() {
+        this.load.setBaseURL('https://labs.phaser.io');
+
+        this.load.image('sky', 'assets/skies/space3.png');
+        this.load.image('logo', 'assets/sprites/phaser3-logo.png');
+        this.load.image('red', 'assets/particles/red.png');
+      }
+
+      function create() {
+        this.add.image(400, 300, 'sky');
+
+        const emitter = this.add.particles(0, 0, 'red', {
+          speed: 100,
+          scale: { start: 1, end: 0 },
+          blendMode: 'ADD'
+        });
+
+        const logo = this.physics.add.image(400, 100, 'logo');
+
+        logo.setVelocity(150, 200);
+        logo.setBounce(1, 1);
+        logo.setCollideWorldBounds(true);
+
+        emitter.startFollow(logo);
+      }
+
+      const config = {
+        type: Phaser.AUTO,
+        width: 800,
+        height: 600,
+        physics: {
+          default: 'arcade',
+          arcade: {
+            gravity: { y: 0 }
+          }
+        },
+        scene: {
+          preload: preload,
+          create: create
+        }
+      };
+
+      if (!game) {
+        setGame(new Phaser.Game(config));
+      }
+
+      return (
+        <div></div>
+      );
     case State.DbSample:
       return DbSample();
     case State.Gasp:
